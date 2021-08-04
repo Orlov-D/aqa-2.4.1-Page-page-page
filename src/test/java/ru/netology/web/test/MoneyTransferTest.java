@@ -3,8 +3,9 @@ package ru.netology.web.test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.web.data.DataHelper;
+import ru.netology.web.page.DashboardReplenishCards;
+import ru.netology.web.page.DashboardYourCards;
 import ru.netology.web.page.LoginPageV1;
-import ru.netology.web.page.TransferPage;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,23 +24,29 @@ class MoneyTransferTest {
     @Test
     void shouldTransferMoneyBetweenOwnCardsV1() {
         var cardsInfo = DataHelper.getCardsInfo();
-        int firstBalanceBefore = DataHelper.getFirstCardBalance();
-        int secondBalanceBefore = DataHelper.getSecondCardBalance();
+        var replenishThis = new DashboardReplenishCards();
+        var yourCards = new DashboardYourCards();
+        int firstBalanceBefore = yourCards.getFirstCardBalance();
+        int secondBalanceBefore = yourCards.getSecondCardBalance();
         int difference = 200;
-        TransferPage.replenishFirst(Integer.toString(difference), cardsInfo);
-        assertEquals(firstBalanceBefore + difference, DataHelper.getFirstCardBalance());
-        assertEquals(secondBalanceBefore - difference, DataHelper.getSecondCardBalance());
+        yourCards.replenishFirst();
+        replenishThis.replenish(Integer.toString(difference), cardsInfo, 1);
+        assertEquals(firstBalanceBefore + difference, yourCards.getFirstCardBalance());
+        assertEquals(secondBalanceBefore - difference, yourCards.getSecondCardBalance());
     }
 
     @Test
     void shouldTransferMoneyBetweenOwnCardsV2() {
         var cardsInfo = DataHelper.getCardsInfo();
-        int firstBalanceBefore = DataHelper.getFirstCardBalance();
-        int secondBalanceBefore = DataHelper.getSecondCardBalance();
+        var replenishThis = new DashboardReplenishCards();
+        var yourCards = new DashboardYourCards();
+        int firstBalanceBefore = yourCards.getFirstCardBalance();
+        int secondBalanceBefore = yourCards.getSecondCardBalance();
         int difference = 200;
-        TransferPage.replenishSecond(Integer.toString(difference), cardsInfo);
-        assertEquals(firstBalanceBefore - difference, DataHelper.getFirstCardBalance());
-        assertEquals(secondBalanceBefore + difference, DataHelper.getSecondCardBalance());
+        yourCards.replenishSecond();
+        replenishThis.replenish(Integer.toString(difference), cardsInfo, 2);
+        assertEquals(firstBalanceBefore - difference, yourCards.getFirstCardBalance());
+        assertEquals(secondBalanceBefore + difference, yourCards.getSecondCardBalance());
     }
 }
 
