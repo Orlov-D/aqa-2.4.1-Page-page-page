@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.val;
 import ru.netology.web.data.DataHelper;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -14,15 +15,20 @@ public class DashboardYourCards {
     private ElementsCollection cards = $$(".list__item");
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
+    private SelenideElement heading = $("[data-test-id=dashboard]");
 
-    public DashboardPage replenishFirst() {
-        replenishFirstCardButton.click();
-        return new DashboardPage();
+    public DashboardYourCards() {
+        heading.shouldBe(visible);
     }
 
-    public DashboardPage replenishSecond() {
+    public DashboardReplenishCards replenishFirst() {
+        replenishFirstCardButton.click();
+        return new DashboardReplenishCards();
+    }
+
+    public DashboardReplenishCards replenishSecond() {
         replenishSecondCardButton.click();
-        return new DashboardPage();
+        return new DashboardReplenishCards();
     }
 
     public int getFirstCardBalance() {
