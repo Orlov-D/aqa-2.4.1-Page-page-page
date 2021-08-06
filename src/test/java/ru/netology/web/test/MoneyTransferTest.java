@@ -28,7 +28,6 @@ class MoneyTransferTest {
         int firstBalanceBefore = yourCards.getFirstCardBalance();
         int secondBalanceBefore = yourCards.getSecondCardBalance();
         int difference = 200;
-        yourCards.replenishFirst();
         var replenishThis = yourCards.replenishFirst();
         replenishThis.replenish(Integer.toString(difference), cardsInfo, 1);
         assertEquals(firstBalanceBefore + difference, yourCards.getFirstCardBalance());
@@ -42,7 +41,6 @@ class MoneyTransferTest {
         int firstBalanceBefore = yourCards.getFirstCardBalance();
         int secondBalanceBefore = yourCards.getSecondCardBalance();
         int difference = 200;
-        yourCards.replenishSecond();
         var replenishThis = yourCards.replenishSecond();
         replenishThis.replenish(Integer.toString(difference), cardsInfo, 2);
         assertEquals(firstBalanceBefore - difference, yourCards.getFirstCardBalance());
